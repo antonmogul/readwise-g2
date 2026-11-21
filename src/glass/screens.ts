@@ -743,7 +743,8 @@ export function welcome(): Screen {
     body([
       'Welcome. One thing to do on the phone first:',
       '',
-      'open this app in Even Hub, tap the gear, paste your',
+      // The phone opens straight into Settings until a token is saved.
+      'open this app on your phone and paste your',
       'Readwise token (readwise.io/access_token) and save.',
       '',
       'Then press here.',
