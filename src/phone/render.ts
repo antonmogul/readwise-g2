@@ -51,6 +51,8 @@ export type PhoneState = {
   article: PhoneArticle | null;
   articleLoading: boolean;
   tokenPresent: boolean;
+  /** Durable storage has answered, so "no token" is known rather than not yet read. */
+  tokenChecked: boolean;
   /** The reader's Claude settings as Settings shows them. The key itself never reaches the DOM. */
   claude: { saved: boolean; model: ClaudeModel };
   /** This build reaches the Brain board (off in a public build). */
@@ -236,27 +238,6 @@ function library(state: PhoneState, actions: PhoneActions): HTMLElement {
   const page = el('div', '');
   page.appendChild(header(APP_NAME, actions));
 
-  if (!state.tokenPresent) {
-    const connect = el('div',
-      `margin:${SPACE.lg}px ${SPACE.screen}px;padding:${SPACE.lg}px ${SPACE.card}px;` +
-      `background:${BC.first};border-radius:${RADIUS}px;`);
-    connect.appendChild(el('div',
-      `font:600 22px ${FONT};line-height:1.25;color:${TC.first};margin-bottom:8px;`,
-      'Connect your Reader library'));
-    connect.appendChild(el('div',
-      `max-width:34ch;font:400 15px ${FONT};line-height:1.5;color:${TC.second};` +
-      `margin-bottom:${SPACE.card}px;`,
-      'Add your Readwise access token once. It stays in the Even app on this device.'));
-    const action = el('button',
-      `min-height:44px;border:0;border-radius:${RADIUS}px;padding:0 ${SPACE.card}px;` +
-      `background:${BC.highlight};color:${TC.highlight};font:500 15px ${FONT};` +
-      `cursor:pointer;`, 'Add Readwise token');
-    action.onclick = () => actions.go({ name: 'settings' });
-    connect.appendChild(action);
-    page.appendChild(connect);
-    return page;
-  }
-
   if (vm.staleNote) page.appendChild(staleBanner(vm.staleNote));
   if (state.error && !vm.staleNote) page.appendChild(errorBanner(state.error));
 
@@ -440,7 +421,8 @@ function claudeSettings(state: PhoneState, actions: PhoneActions): HTMLElement {
 
 function settings(state: PhoneState, actions: PhoneActions): HTMLElement {
   const page = el('div', '');
-  page.appendChild(header('Settings', actions, { name: 'library' }));
+  // No Back on first run: there is no library to go back to until a token is saved.
+  page.appendChild(header('Settings', actions, state.tokenPresent ? { name: 'library' } : undefined));
 
   const body = el('div', `padding:${SPACE.card}px ${SPACE.screen}px;`);
   const label = el('label',
@@ -520,6 +502,16 @@ export function render(root: HTMLElement, state: PhoneState, actions: PhoneActio
   root.setAttribute('style',
     `margin:0;min-height:100vh;background:${BC.third};font-family:${FONT};` +
     `-webkit-font-smoothing:antialiased;`);
+
+  // Settings is the one place setup happens. Without a token there is nothing
+  // else to show, so the phone opens straight into it — the old "Connect your
+  // Reader library" card was a second door to the same room (Anton, 2026-11-21).
+  // Until durable storage answers, "no token" is not yet known: draw nothing
+  // rather than flash setup at someone who has a token saved.
+  if (!state.tokenPresent) {
+    if (state.tokenChecked) root.appendChild(settings(state, actions));
+    return;
+  }
 
   const page =
     state.route.name === 'article' ? article(state, actions)

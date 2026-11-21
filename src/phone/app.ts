@@ -56,6 +56,7 @@ export function mountPhone(root: HTMLElement): PhoneHandle {
     article: null,
     articleLoading: false,
     tokenPresent: Boolean(readToken()),
+    tokenChecked: false,
     claude: { saved: readClaude() !== null, model: readClaude()?.model ?? DEFAULT_MODEL },
     boardEnabled: boardEnabled(),
   };
@@ -243,6 +244,7 @@ export function mountPhone(root: HTMLElement): PhoneHandle {
   paint();
   void Promise.all([hydrate(), hydrateClaude()]).then(([token, claude]) => {
     state.tokenPresent = Boolean(token);
+    state.tokenChecked = true;
     state.claude = { saved: claude !== null, model: claude?.model ?? state.claude.model };
     return refresh();
   });

@@ -734,6 +734,7 @@ describe('offline, loading and welcome', () => {
     const all = welcome().containers.map((c) => c.content).join(' ');
     expect(all).toContain('Welcome');
     expect(all).toContain('readwise.io/access_token');
+    expect(all).not.toContain('gear');
     expect(all).not.toContain('Offline');
     expect(welcome().containers.find((c) => c.containerName === 'footer')!.content)
       .toBe('Press when saved · Double exit');
