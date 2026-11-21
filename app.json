@@ -1,0 +1,25 @@
+{
+  "package_id": "com.antonmorrison.reader",
+  "edition": "202601",
+  "name": "Readwise",
+  "version": "0.1.0",
+  "min_app_version": "2.2.10",
+  "min_sdk_version": "0.0.16",
+  "entrypoint": "index.html",
+  "tagline": "Your Readwise Reader library on your glasses",
+  "description": "Take your Readwise Reader library on the road. I have used Readwise for years, and my saved-for-later list grew faster than I could ever sit down and read it. So I built this to read it on my glasses: glance at what arrived, decide what is worth your time, and read in the moments in between.\n\nWHAT YOU CAN DO\n• Browse Recently added, Quick reads under 5 minutes, your Feed, Continue reading, Long reads and Surprise me\n• Open an article on a preview (the publisher's note or its opening) and decide whether to read it\n• Read the full article on the glasses. Your place is saved as you go, so you can pick up where you left off\n• Hold to archive in Readwise and move straight on to the next article\n• Use the phone companion to search, filter and read the full text\n\nAI SUMMARIES (OPTIONAL)\nAI summaries and Feed sorting are written by Claude, using your own Anthropic API key, which you add in Settings. You choose the model: Claude Opus, Sonnet or Haiku. Opening an article never uses AI. You ask for a summary from the menu, and it is kept, so you only pay for it once.\n\nWhy not Ghostreader? Readwise's own AI, Ghostreader, is not available through the Readwise API, so the app brings its own. If Readwise makes Ghostreader available to apps, this one will use it.\n\nWHAT YOU NEED\n• A Readwise Reader account and your access token from readwise.io/access_token\n• Optional: an Anthropic API key from console.anthropic.com, for AI summaries\n\nPRIVACY\nYour Readwise token and Claude key stay on your phone. The app talks only to Readwise and, if you add a key, to Anthropic. There is no server in between, no account to create, and no tracking.\n\nAn independent app by a long-time Readwise user. Not made by or affiliated with Readwise.",
+  "author": "Anton Morrison",
+  "permissions": [
+    {
+      "name": "network",
+      "desc": "Reads your Readwise Reader library with your access token. If you add a Claude API key, sends an article you ask to summarise, or your Feed headlines, to Anthropic. Nothing goes to any other server.",
+      "whitelist": [
+        "https://readwise.io",
+        "https://api.anthropic.com"
+      ]
+    }
+  ],
+  "supported_languages": [
+    "en"
+  ]
+}

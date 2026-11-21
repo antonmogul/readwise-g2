@@ -1,0 +1,33 @@
+{
+  "package_id": "com.example.readwisebrain",
+  "edition": "202601",
+  "name": "Readwise",
+  "version": "0.6.0",
+  "min_app_version": "2.2.10",
+  "min_sdk_version": "0.0.16",
+  "entrypoint": "index.html",
+  "tagline": "Read and rediscover your Readwise library",
+  "description": "Read saved articles, newsletters and RSS from Readwise Reader on Even Realities G2. Browse recent saves, find a short read, continue an article or rediscover something from your reading list. Preview an article, ask for an AI summary when you want one, open the full text and archive when finished. Requires a Readwise Reader account and access token. AI summaries and Feed sorting use your own Claude API key from Anthropic, added in Settings and billed to your Anthropic account; reading works without it. Reading positions are saved on this device, not synced to Readwise. With the app installed, Even AI can open it on Even Realities App 2.4.0 or later.",
+  "author": "You",
+  "permissions": [
+    {
+      "name": "network",
+      "desc": "Reads your Readwise Reader library. With your own Claude API key, sends an article you ask to summarise, or your Feed headlines, to Anthropic. Can also reach a personal Brain service on your own machine.",
+      "whitelist": [
+        "https://readwise.io",
+        "https://api.anthropic.com",
+        "https://your-board.example.ts.net:4317",
+        "https://your-board.example.ts.net",
+        "http://127.0.0.1:4317",
+        "http://localhost:4317"
+      ]
+    },
+    {
+      "name": "g2-microphone",
+      "desc": "Hears a question you ask your library — only while the Listening screen is up, and it goes only to your own Brain to be transcribed."
+    }
+  ],
+  "supported_languages": [
+    "en"
+  ]
+}
